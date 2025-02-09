@@ -21,10 +21,6 @@ export async function POST(req: Request) {
   
   return NextResponse.json({ message: "Cart data retrieved successfully", data });
 
-    return NextResponse.json({
-      message: "Cart data retrieved successfully",
-      data,
-    });
   } catch (error) {
     console.error("Unhandled Error:", error);
     return NextResponse.json(
