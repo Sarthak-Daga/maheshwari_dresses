@@ -1,24 +1,27 @@
 'use client'
 
-import { login, signup } from './action';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react'
+import { createClient } from '@/utils/supabase/client'
+import { login, signup } from './action'
 
 interface User {
-  name: string;
-  email: string;
+  name: string
+  email: string
 }
 
 export default function LoginPage() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await fetch('/api/auth'); // Replace with actual API call
-      const data = await response.json();
-      setUser(data.user);
-    };
-    fetchUser();
-  }, []);
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        setUser({ name: user?.email?.split('@')[0] || 'Unknown', email: user?.email || '' })
+      }
+    }
+    fetchUser()
+  }, [])
 
   if (user) {
     return (
@@ -30,8 +33,8 @@ export default function LoginPage() {
           <p className="text-center text-gray-600">Email: {user.email}</p>
           <button
             onClick={async () => {
-              await fetch('/api/logout', { method: 'POST' });
-              setUser(null);
+              await fetch('/api/logout', { method: 'POST' })
+              setUser(null)
             }}
             className="mt-4 w-full rounded-lg bg-red-500 px-4 py-2 text-white transition hover:bg-red-600"
           >
@@ -39,7 +42,7 @@ export default function LoginPage() {
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -90,5 +93,5 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
