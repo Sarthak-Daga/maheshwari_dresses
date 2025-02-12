@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Card from "@/components/cards/page";
 
-// Define the TypeScript type for the fetched data
 interface CartItem {
   id: number;
   quantity: number;
@@ -18,6 +18,7 @@ interface CartItem {
 export default function Cart() {
   const [cartData, setCartData] = useState<CartItem[]>([]);
   const [error, setError] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -25,26 +26,28 @@ export default function Cart() {
         const response = await fetch("/cart/api", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include", // ✅ Ensures cookies/token are sent
         });
-  
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Failed to fetch: ${errorText}`);
+
+        if (response.status === 401) {
+          router.replace("/login"); // ✅ Redirect immediately
+          return; // ⛔ Stop execution
         }
-  
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch: ${await response.text()}`);
+        }
+
         const data = await response.json();
-        console.log("Fetched Cart Data:", data); // Debugging
-  
         setCartData(data.data || []);
       } catch (error) {
         console.error("Fetch Error:", error);
         setError("An error occurred while retrieving data.");
       }
     };
-  
+
     fetchCart();
-  }, []);
-  
+  }, [router]);
 
   return (
     <>
