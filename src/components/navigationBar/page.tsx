@@ -21,7 +21,7 @@ export default function NavigationBar() {
         </li>
         <div className="w-[30%] flex flex-row justify-between">
           <li><a href="/">Home</a></li>
-          <li><a href="/shop">Shop</a></li>
+          <li><a href="/about">About</a></li>
 
           {/* Categories Dropdown */}
           <li className="relative group">
