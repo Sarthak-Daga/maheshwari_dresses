@@ -1,27 +1,26 @@
 interface CardProps {
-  title: string;
-  price: number | string;
+  Title: string;
+  Price: number | string;
   desc: string;
-  imgLink: string;
-  quantity: number;
+  img_link: string;
 }
 
-export default function Card({ title, price, desc, imgLink, quantity }: CardProps) {
+export default function Card({ Title, Price, desc, img_link }: CardProps) {
   return (
-    <div className="flex w-full max-w-md gap-4 rounded-lg bg-white p-4 shadow-md">
-      <img
-        src={imgLink}
-        alt={title}
-        className="h-24 w-24 rounded-lg object-cover"
-      />
-      
-      <div className="flex flex-col justify-between flex-1">
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
-          <span className="text-lg font-bold text-gray-900">₹{price}</span>
+    <div className="w-screen m-2 flex h-50 flex-row ">
+      <div className="m-2 h-45 w-40 ">
+        <img src={img_link} alt="Product Image" className="h-full w-full" />
+      </div>
+      <div>
+        <div className="mt-0.5 flex h-max w-140 gap-1">
+          <div className="w-[50%] pl-5 text-2xl">
+            {Title}
+          </div>
+          <div className="w-[50%] pr-5 text-end text-2xl">
+            {Price}
+          </div>
         </div>
-        <p className="text-gray-600 text-sm mt-2">{desc}</p>
-        <p className="text-gray-700 text-sm mt-2">Quantity: {quantity}</p>
+        <div className="p-3 text-gray-500 text-xl">{desc}</div>
       </div>
     </div>
   );

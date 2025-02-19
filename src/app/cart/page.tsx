@@ -26,12 +26,12 @@ export default function Cart() {
         const response = await fetch("/cart/api", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          credentials: "include",
+          credentials: "include", // ✅ Ensures cookies/token are sent
         });
 
         if (response.status === 401) {
-          router.replace("/login");
-          return;
+          router.replace("/login"); // ✅ Redirect immediately
+          return; // ⛔ Stop execution
         }
 
         if (!response.ok) {
@@ -50,23 +50,18 @@ export default function Cart() {
   }, [router]);
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      {error && <p className="text-red-500 text-center">{error}</p>}
-      {cartData.length === 0 && !error && (
-        <p className="text-gray-600 text-center">Your cart is empty.</p>
-      )}
-      <div className="grid gap-4">
-        {cartData.map((item) => (
-          <Card
-            key={item.id}
-            title={item.products?.name || "No Title"}
-            price={item.products?.price || 0}
-            desc={item.products?.description || "No description available"}
-            imgLink={item.products?.image_url || ""}
-            quantity={item.quantity}
-          />
-        ))}
-      </div>
-    </div>
+    <>
+      {error && <p className="text-red-500">{error}</p>}
+      {cartData.length === 0 && !error && <p>Your cart is empty.</p>}
+      {cartData.map((item) => (
+        <Card
+          key={item.id}
+          Title={item.products?.name || "No Title"}
+          Price={item.products?.price || 0}
+          desc={item.products?.description || "No description available"}
+          img_link={item.products?.image_url || ""}
+        />
+      ))}
+    </>
   );
 }
