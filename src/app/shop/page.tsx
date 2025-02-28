@@ -43,7 +43,7 @@ const Shop = () => {
       return;
     }
 
-    const response = await fetch("api/route.ts", {
+    const response = await fetch("/shop/api", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id: userId, product_id, quantity: 1 }),
@@ -55,10 +55,33 @@ const Shop = () => {
   };
 
   return (
-    <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 place-items-center">
-      {products.map((product) => (
-        <CardShop key={product.id} product={product} addToCart={addToCart} />
-      ))}
+    <div className="container mx-auto px-4 py-12 bg-gradient-to-b from-gray-50 to-white min-h-screen">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center">Our Products</h1>
+        
+        {products.length === 0 ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-pulse flex space-x-4">
+              <div className="rounded-full bg-gray-200 h-12 w-12"></div>
+              <div className="flex-1 space-y-4 py-1">
+                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-200 rounded"></div>
+                  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+            {products.map((product) => (
+              <div key={product.id} className="transform transition duration-300 hover:scale-105">
+                <CardShop product={product} addToCart={addToCart} />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

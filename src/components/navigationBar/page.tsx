@@ -5,44 +5,84 @@ import search from "@/../public/search.png";
 
 export default function NavigationBar() {
   return (
-    <nav className="bg-gray-100">
-      <ul className="flex flex-row gap-5 p-2 mr-5">
-        <li className="w-[20%] text-center">Maheshwari Dresses</li>
-        <li className="w-[50%]">
-          <div className="flex flex-row">
-            <input
-              type="text"
-              className="border border-black rounded-l-xl rounded-r-xl w-[85%] pl-3 pt-1 pb-1"
-            />
-            <a href="/product">
-              <Image src={search} alt="search" height={20} className="absolute ml-[-25px] mt-1" />
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between">
+          {/* Logo/Brand */}
+          <div className="flex-shrink-0">
+            <a href="/" className="text-xl font-bold text-indigo-700 hover:text-indigo-600 transition-colors">
+              Maheshwari Dresses
             </a>
           </div>
-        </li>
-        <div className="w-[30%] flex flex-row justify-between">
-          <li><a href="/">Home</a></li>
-          <li><a href="/shop">Shop</a></li>
 
-          {/* Categories Dropdown */}
-          <li className="relative group">
-            <a href="/product" className="hover:text-gray-600">Categories</a>
-            <ul className="absolute left-0 mt-2 w-40 bg-white text-gray-800 shadow-lg rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-              <li className="px-4 py-2 hover:bg-gray-200"><a href="/category/electronics">Shirt</a></li>
-              <li className="px-4 py-2 hover:bg-gray-200"><a href="/category/electronics">T-Shirt</a></li>
-              <li className="px-4 py-2 hover:bg-gray-200"><a href="/category/electronics">Formals</a></li>
-              <li className="px-4 py-2 hover:bg-gray-200"><a href="/category/fashion">Fashion</a></li>
-              <li className="px-4 py-2 hover:bg-gray-200"><a href="/category/home-appliances">Home Appliances</a></li>
-            </ul>
-          </li>
+          {/* Search Bar */}
+          <div className="flex-grow max-w-xl mx-6">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search for products..."
+                className="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              />
+              <a href="/product" className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                <Image 
+                  src={search} 
+                  alt="search" 
+                  height={20} 
+                  width={20}
+                  className="text-gray-500 hover:text-indigo-500 transition-colors" 
+                />
+              </a>
+            </div>
+          </div>
 
-          <li><a href="/cart"><Image src={shoppingCart} alt="cart" height={22} /></a></li>
-          <li>
-            <a href="/profile">
-              <Image src={profile} alt="profile" height={26} className="rounded-[100%]" />
+          {/* Navigation Links */}
+          <div className="hidden md:flex items-center space-x-8">
+            <a href="/" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Home</a>
+            <a href="/shop" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Shop</a>
+
+            {/* Categories Dropdown */}
+            <div className="relative group">
+              <a href="/product" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors flex items-center">
+                Categories
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <a href="/category/electronics" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Shirt</a>
+                <a href="/category/electronics" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">T-Shirt</a>
+                <a href="/category/electronics" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Formals</a>
+                <a href="/category/fashion" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Fashion</a>
+                <a href="/category/home-appliances" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Home Appliances</a>
+              </div>
+            </div>
+          </div>
+
+          {/* Cart and Profile */}
+          <div className="flex items-center space-x-6">
+            <a href="/cart" className="relative p-2 text-gray-700 hover:text-indigo-600 transition-colors">
+              
+              <Image src={shoppingCart} alt="cart" height={22} width={22} />
             </a>
-          </li>
+            <a href="/profile" className="relative">
+              <Image 
+                src={profile} 
+                alt="profile" 
+                height={36} 
+                width={36} 
+                className="rounded-full border-2 border-transparent hover:border-indigo-500 transition-colors" 
+              />
+            </a>
+          </div>
         </div>
-      </ul>
+
+        {/* Mobile Navigation Menu (simplified) */}
+        <div className="md:hidden flex justify-center mt-3 pb-1 space-x-6">
+          <a href="/" className="text-gray-700 hover:text-indigo-600 font-medium">Home</a>
+          <a href="/shop" className="text-gray-700 hover:text-indigo-600 font-medium">Shop</a>
+          <a href="/product" className="text-gray-700 hover:text-indigo-600 font-medium">Categories</a>
+        </div>
+      </div>
     </nav>
   );
 }
