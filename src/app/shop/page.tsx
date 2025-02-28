@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/utils/supabase/client";
 import CardShop from "@/components/CardShop/page";
 
 interface Product {
@@ -14,34 +14,59 @@ interface Product {
   created_at: string;
 }
 
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+const supabase = createClient();
 
 const Shop = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
 
+  //* ----------------------------------------------------------------------------------
+
   useEffect(() => {
     const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      if (data.session) setUserId(data.session.user.id);
-    };
+      const { data, error } = await supabase.auth.getUser();
 
-    const fetchProducts = async () => {
-      const { data, error } = await supabase
-        .from("products")
-        .select("id, name, description, price, stock, image_url, category, created_at");
-      if (!error) setProducts(data as Product[]);
+      if (error) {
+        console.error("Error fetching user:", error);
+        return;
+      }
+
+      console.log("Session Data:", data);
+      if (data?.user) {
+        setUserId(data.user.id);
+      }
     };
 
     fetchUser();
+  }, []);
+
+  //* ----------------------------------------------------------------------------------
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data, error } = await supabase.from("products").select("*");
+
+      if (error) {
+        console.error("Error fetching products:", error);
+        return;
+      }
+
+      console.log("Fetched Products:", data);
+      setProducts(data || []);
+    };
+
     fetchProducts();
   }, []);
+
+  //* ----------------------------------------------------------------------------------
 
   const addToCart = async (product_id: number) => {
     if (!userId) {
       alert("You must be logged in to add items to the cart!");
       return;
     }
+
+    console.log("Current User ID:", userId);
 
     const response = await fetch("/shop/api", {
       method: "POST",
@@ -54,11 +79,15 @@ const Shop = () => {
     else alert(`Error: ${result.error}`);
   };
 
+  //* ----------------------------------------------------------------------------------
+
   return (
     <div className="container mx-auto px-4 py-12 bg-gradient-to-b from-gray-50 to-white min-h-screen">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center">Our Products</h1>
-        
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center">
+          Our Products
+        </h1>
+
         {products.length === 0 ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-pulse flex space-x-4">
@@ -75,7 +104,10 @@ const Shop = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
             {products.map((product) => (
-              <div key={product.id} className="transform transition duration-300 hover:scale-105">
+              <div
+                key={product.id}
+                className="transform transition duration-300 hover:scale-105"
+              >
                 <CardShop product={product} addToCart={addToCart} />
               </div>
             ))}
