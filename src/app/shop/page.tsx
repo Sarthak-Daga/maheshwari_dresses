@@ -20,7 +20,6 @@ const Shop = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
 
-  //* ----------------------------------------------------------------------------------
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -40,7 +39,6 @@ const Shop = () => {
     fetchUser();
   }, []);
 
-  //* ----------------------------------------------------------------------------------
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -58,7 +56,6 @@ const Shop = () => {
     fetchProducts();
   }, []);
 
-  //* ----------------------------------------------------------------------------------
 
   const addToCart = async (product_id: number) => {
     if (!userId) {
@@ -79,7 +76,6 @@ const Shop = () => {
     else alert(`Error: ${result.error}`);
   };
 
-  //* ----------------------------------------------------------------------------------
 
   return (
     <div className="container mx-auto px-4 py-12 bg-gradient-to-b from-gray-50 to-white min-h-screen">
