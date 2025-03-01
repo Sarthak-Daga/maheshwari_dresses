@@ -53,7 +53,7 @@ export default function NavigationBar() {
                 <a href="/category/electronics" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">T-Shirt</a>
                 <a href="/category/electronics" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Formals</a>
                 <a href="/category/fashion" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Fashion</a>
-                <a href="/category/home-appliances" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Home Appliances</a>
+                <a href="/category/home-appliances" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Jeans</a>
               </div>
             </div>
           </div>

@@ -119,10 +119,10 @@ export default function Home() {
               </h3>
               <div className="mt-1 flex items-center">
                 <span className="text-indigo-600 font-bold text-lg">
-                  $99.99
+                  ₹99.99
                 </span>
                 <span className="ml-2 text-sm text-gray-500 line-through">
-                  $129.99
+                  ₹129.99
                 </span>
               </div>
               <div className="mt-1 flex items-center">
