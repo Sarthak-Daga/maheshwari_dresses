@@ -105,3 +105,59 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ error: "An internal server error occurred." }, { status: 500 });
   }
 }
+
+// Checkout cart (PUT request)
+export async function PUT(req: Request) {
+  try {
+    const supabase = await createClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json({ error: "User not authenticated." }, { status: 401 });
+    }
+
+    // Fetch cart items for the user
+    const { data: cartItems, error: cartError } = await supabase
+      .from("cart")
+      .select("id, quantity, product_id, products:product_id(stock)")
+      .eq("user_id", user.id);
+
+    if (cartError || !cartItems || cartItems.length === 0) {
+      return NextResponse.json({ error: "Cart is empty or could not fetch cart items." }, { status: 400 });
+    }
+
+    const updates = cartItems.map(async (item) => {
+      const newStock = Math.max(item.products.stock - item.quantity, 0);
+
+      const { error: stockError } = await supabase
+        .from("products")
+        .update({ stock: newStock })
+        .eq("id", item.product_id);
+
+      return stockError;
+    });
+
+    const updateResults = await Promise.all(updates);
+    const anyUpdateFailed = updateResults.some((e) => e !== null);
+
+    if (anyUpdateFailed) {
+      return NextResponse.json({ error: "Failed to update some product stock." }, { status: 500 });
+    }
+
+    // Clear the cart
+    const { error: clearError } = await supabase
+      .from("cart")
+      .delete()
+      .eq("user_id", user.id);
+
+    if (clearError) {
+      return NextResponse.json({ error: "Failed to clear cart." }, { status: 500 });
+    }
+
+    return NextResponse.json({ message: "Checkout successful. Stock updated and cart cleared." });
+  } catch (error) {
+    console.error("Checkout Error:", error);
+    return NextResponse.json({ error: "An internal server error occurred." }, { status: 500 });
+  }
+}
+
