@@ -42,18 +42,16 @@ export default function NavigationBar() {
 
             {/* Categories Dropdown */}
             <div className="relative group">
-              <a href="/product" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors flex items-center">
+              <a href="/shop" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors flex items-center">
                 Categories
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </a>
               <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <a href="/category/electronics" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Shirt</a>
-                <a href="/category/electronics" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">T-Shirt</a>
-                <a href="/category/electronics" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Formals</a>
-                <a href="/category/fashion" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Fashion</a>
-                <a href="/category/home-appliances" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Jeans</a>
+                <a href="/category/shirts" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Shirt</a>
+                <a href="/category/Tshirts" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Tshirt</a>
+                <a href="/category/Jeans" className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700">Jeans</a>
               </div>
             </div>
           </div>
@@ -80,7 +78,7 @@ export default function NavigationBar() {
         <div className="md:hidden flex justify-center mt-3 pb-1 space-x-6">
           <a href="/" className="text-gray-700 hover:text-indigo-600 font-medium">Home</a>
           <a href="/shop" className="text-gray-700 hover:text-indigo-600 font-medium">Shop</a>
-          <a href="/product" className="text-gray-700 hover:text-indigo-600 font-medium">Categories</a>
+          <a href="/shop" className="text-gray-700 hover:text-indigo-600 font-medium">Categories</a>
         </div>
       </div>
     </nav>
